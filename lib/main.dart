@@ -1,4 +1,5 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -38,8 +39,18 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white,
+          selectionHandleColor: Colors.white,
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: TextColor),
+          bodyText2: TextStyle(color: TextColor),
+          headline5: TextStyle(color: TextColor),
+          headline3: TextStyle(color: TextColor, fontSize: 38, fontWeight: FontWeight.bold),
+        ),
+
       ),
       home: HomeScreen(),
     );

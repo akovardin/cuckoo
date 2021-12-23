@@ -4,7 +4,7 @@ import 'package:cuckoo/components/tabs/tabs.dart';
 import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/state.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/alarm.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/list/list.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,46 +60,6 @@ class Frame extends ConsumerWidget {
     return Expanded(
       child: Column(
         children: [
-          Container(
-            height: 55,
-            decoration: const BoxDecoration(
-              color: DarkColor,
-              border: Border(
-                left: BorderSide(
-                  color: Colors.black,
-                  width: 1,
-                ),
-              ),
-            ),
-            child: WindowTitleBarBox(
-              child: MoveWindow(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: DarkColor,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      ref.watch(homeStateProvider).isAlarmButton ?
-                      GestureDetector(
-                        child: Icon(Icons.add, color: Colors.grey),
-                        onTap: () {
-                          ref.read(alarmStateProvider.notifier).add(AlarmModel(3, 0, "example", false));
-                        },
-                      ) : Container(),
-                      SizedBox(width: 24),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: Container(
               color: DarkColor,
@@ -114,7 +74,7 @@ class Frame extends ConsumerWidget {
                     },
                     child: TabNavigator(
                       navigatorKey: navigatorKey1,
-                      child: const AlarmScreen(),
+                      child: const AlarmListScreen(),
                     ),
                   ),
 

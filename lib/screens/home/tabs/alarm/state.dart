@@ -7,17 +7,21 @@ part 'state.g.dart';
 
 var alarmStateProvider = StateNotifierProvider<AlarmStateNotifier, AlarmState>((ref) {
   return AlarmStateNotifier(
-    AlarmState(alarms: []),
+    AlarmState(list: [], edit: false, alarm: null),
     service: AlarmService(),
   );
 });
 
 @CopyWith()
 class AlarmState {
-  List<AlarmModel> alarms = [];
+  List<AlarmModel> list = [];
+  AlarmModel? alarm; // alarm for edit
+  bool edit = false;
 
   AlarmState({
-    required this.alarms,
+    required this.list,
+    required this.edit,
+    required this.alarm,
   });
 }
 
@@ -26,23 +30,35 @@ class AlarmStateNotifier extends StateNotifier<AlarmState> {
 
   AlarmStateNotifier(AlarmState state, {required this.service}) : super(state);
 
+  mode() {
+    state = state.copyWith(edit: !state.edit);
+  }
+
+  edit(AlarmModel alarm) {
+    state = state.copyWith(alarm: alarm);
+  }
+
   fetch() {
-    this.service.fetch().then((value) {
-      state = state.copyWith(alarms: value);
+    service.fetch().then((value) {
+      state = state.copyWith(list: value);
     });
   }
 
   update(AlarmModel alarm) {
-    this.service.update(alarm);
-    fetch();
+    service.update(alarm).then((value) {
+      fetch();
+    });
   }
 
-  add(AlarmModel alarm) {
-    this.service.add(alarm);
-    fetch();
+  create(AlarmModel alarm) {
+    service.create(alarm).then((value) {
+      fetch();
+    });
   }
 
-  delete() {
-
+  remove(int id) {
+    service.remove(id).then((value) {
+      fetch();
+    });
   }
 }

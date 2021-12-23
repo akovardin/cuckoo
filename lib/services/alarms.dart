@@ -1,26 +1,61 @@
+import 'package:cuckoo/database/database.dart';
 import 'package:cuckoo/models/alarm.dart';
+import 'package:sqflite/sqflite.dart' as sql;
+
+const AlarmTable = 'alarms';
 
 class AlarmService {
-  List<AlarmModel> alarms = [
-    AlarmModel(1, 0, 'Король и Шут - Кукла колдуна.', false),
-    AlarmModel(2, 0, 'Король и Шут - Лесник.', false)
-  ];
 
   Future<List<AlarmModel>> fetch() async {
-    return alarms;
+    var db = await Database.get();
+    final List<Map<String, dynamic>> recs =
+    await db.query(AlarmTable, orderBy: 'id DESC');
+
+    return List.generate(recs.length, (index) {
+      return AlarmModel.fromMap(recs[index]);
+    });
   }
 
-  void update(AlarmModel alarm) {
-    alarms = alarms.map((e) {
-      if (e.id == alarm.id) {
-        return alarm;
-      }
+  Future<AlarmModel> create(AlarmModel alarm) async {
+    var db = await Database.get();
+    var val = await db.rawQuery('select max(id) +1 as id from $AlarmTable');
+    int? id = val.first['id'] as int?;
+    id ??= 0;
 
-      return e;
-    }).toList();
+    alarm.id = id;
+
+    await db.insert(AlarmTable, alarm.toMap(), conflictAlgorithm: sql.ConflictAlgorithm.replace);
+
+    return alarm;
   }
 
-  void add(AlarmModel alarm) {
-    alarms.add(alarm);
+  Future<void> update(AlarmModel alarm) async {
+    var db = await Database.get();
+    await db.update(
+      AlarmTable,
+      alarm.toMap(),
+      where: 'id = ?',
+      whereArgs: [alarm.id],
+    );
+  }
+
+  Future<int> count() async {
+    var db = await Database.get();
+
+    var val = await db.rawQuery('select count(*) as cnt from $AlarmTable');
+    int? cnt = val.first['cnt'] as int?;
+    cnt ??= 0;
+
+    return cnt;
+  }
+
+  Future<void> remove(int id) async {
+    var db = await Database.get();
+
+    db.delete(
+      AlarmTable,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
