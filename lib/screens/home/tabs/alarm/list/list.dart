@@ -3,8 +3,9 @@ import 'package:cuckoo/components/title/title.dart';
 import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/edit.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/edit/state.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/list/components/alarm.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,7 +20,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(alarmStateProvider.notifier).fetch();
+    ref.read(listStateProvider.notifier).fetch();
   }
 
   @override
@@ -35,7 +36,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               GestureDetector(
                 child: const Icon(Icons.add, color: Colors.grey),
                 onTap: () {
-                  ref.read(alarmStateProvider.notifier).edit(AlarmModel(0, '', '', '', false));
+                  ref.read(alarmStateProvider.notifier).current(AlarmModel(0, '', '', '', false));
                   Navigator.push(
                     context,
                     PageRouteBuilder(
@@ -61,20 +62,20 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
                     children: [
                       Text('Alarm', style: style.copyWith(fontSize: 38, fontWeight: FontWeight.bold)),
                       const Spacer(),
-                      if (ref.watch(alarmStateProvider).list.length > 0)
+                      if (ref.watch(listStateProvider).list.length > 0)
                         PrimaryButton(
-                          title: ref.watch(alarmStateProvider).edit ? 'CANCEL' : 'EDIT',
+                          title: ref.watch(listStateProvider).edit ? 'CANCEL' : 'EDIT',
                           tap: () {
-                            ref.read(alarmStateProvider.notifier).mode();
+                            ref.read(listStateProvider.notifier).mode();
                           },
                         )
                     ],
                   ),
                   const SizedBox(height: 32),
-                  if (ref.watch(alarmStateProvider).list.length > 0)
+                  if (ref.watch(listStateProvider).list.length > 0)
                     Column(
                       children: [
-                        for (var alarm in ref.watch(alarmStateProvider).list) AlarmWidget(alarm: alarm),
+                        for (var alarm in ref.watch(listStateProvider).list) AlarmWidget(alarm: alarm),
                       ],
                     )
                   else

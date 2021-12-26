@@ -7,6 +7,7 @@ class DayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Container(
       width: 200,
       child: Column(

@@ -1,7 +1,8 @@
 import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/edit.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/edit/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,13 +23,13 @@ class AlarmWidget extends ConsumerWidget {
       decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: GrayColor, width: 1))),
       child: Row(
         children: [
-          if (ref.watch(alarmStateProvider).edit)
+          if (ref.watch(listStateProvider).edit)
             Row(
               children: [
                 GestureDetector(
                   child: Icon(CupertinoIcons.minus_circled, color: Colors.red),
                   onTap: () {
-                    ref.read(alarmStateProvider.notifier).remove(alarm.id);
+                    ref.read(listStateProvider.notifier).remove(alarm.id);
                   },
                 ),
                 SizedBox(width: 12),
@@ -39,15 +40,15 @@ class AlarmWidget extends ConsumerWidget {
             children: [
               Text(alarm.time, style: style.copyWith(fontSize: 44, fontWeight: FontWeight.w300)),
               const SizedBox(height: 12),
-              Text(alarm.audio != '' ? alarm.audio : 'Alarm', style: style),
+              Text(alarm.audio != '' ? alarm.name() : 'Alarm', style: style),
             ],
           ),
           const Spacer(),
-          if (ref.watch(alarmStateProvider).edit)
+          if (ref.watch(listStateProvider).edit)
             GestureDetector(
               child: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
-                ref.read(alarmStateProvider.notifier).edit(alarm);
+                ref.read(alarmStateProvider.notifier).current(alarm);
 
                 Navigator.push(
                   context,
@@ -64,7 +65,9 @@ class AlarmWidget extends ConsumerWidget {
               activeColor: PrimaryColor,
               value: alarm.status,
               onChanged: (v) {
-                ref.read(alarmStateProvider.notifier).update(alarm..status = !alarm.status);
+                ref.read(alarmStateProvider.notifier).update(alarm..status = !alarm.status).then((value) {
+                  ref.read(listStateProvider.notifier).fetch();
+                });
               },
             ),
         ],

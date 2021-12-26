@@ -1,3 +1,5 @@
+import 'package:path/path.dart';
+
 class AlarmModel {
   int id;
   String time;
@@ -25,5 +27,25 @@ class AlarmModel {
       rec['title'],
       rec['status'] > 0,
     );
+  }
+
+  String name() {
+    return basename(audio);
+  }
+
+  String hours() {
+    if (!time.contains(':')) {
+      return '';
+    }
+
+    return time.split(':')[0];
+  }
+
+  String minutes() {
+    if (!time.contains(':')) {
+      return '';
+    }
+
+    return time.split(':')[1];
   }
 }

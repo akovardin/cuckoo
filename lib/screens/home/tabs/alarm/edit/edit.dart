@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:cuckoo/components/buttons/primary.dart';
 import 'package:cuckoo/components/title/title.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/audio.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/day.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/time.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/edit/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,12 +53,14 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                 children: [
                   Text('Create', style: theme.textTheme.headline3),
                   const Spacer(),
-                    PrimaryButton(
-                      title: 'SAVE',
-                      tap: () {
-                        ref.read(alarmStateProvider.notifier).create(AlarmModel(0, "${hours.value.text}:${minutes.value.text}", '', '', false));
-                      },
-                    )
+                  PrimaryButton(
+                    title: 'SAVE',
+                    tap: () {
+                      ref.read(alarmStateProvider.notifier).create(ref.read(alarmStateProvider).alarm!).then((value) {
+                        ref.read(listStateProvider.notifier).fetch();
+                      });
+                    },
+                  )
                 ],
               ),
               const SizedBox(height: 32),
@@ -66,10 +71,7 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TimeWidget(
-                        hours: hours,
-                        minutes: minutes,
-                      ),
+                      TimeWidget(),
                       SizedBox(height: 50),
                       AudioWidget(),
                     ],

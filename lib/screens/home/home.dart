@@ -5,7 +5,7 @@ import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/state.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/list/list.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/state.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

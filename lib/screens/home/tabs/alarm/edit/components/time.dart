@@ -1,15 +1,44 @@
 import 'package:cuckoo/constants.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/edit/state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TimeWidget extends StatelessWidget {
-  const TimeWidget({
+class TimeWidget extends ConsumerStatefulWidget {
+  TimeWidget({
     Key? key,
-    required this.hours,
-    required this.minutes,
   }) : super(key: key);
 
-  final TextEditingController hours;
-  final TextEditingController minutes;
+  @override
+  ConsumerState<TimeWidget> createState() => _TimeWidgetState();
+}
+
+class _TimeWidgetState extends ConsumerState<TimeWidget> {
+  final TextEditingController hours = TextEditingController();
+  final TextEditingController minutes = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (ref.read(alarmStateProvider).alarm!.time != '') {
+      hours.text = ref.read(alarmStateProvider).alarm!.hours();
+      minutes.text = ref.read(alarmStateProvider).alarm!.minutes();
+    }
+
+    hours.addListener(() {
+      update();
+    });
+
+    minutes.addListener(() {
+      update();
+    });
+
+  }
+
+  void update() {
+    ref.read(alarmStateProvider.notifier).time("${hours.value.text}:${minutes.value.text}");
+  }
 
   @override
   Widget build(BuildContext context) {
