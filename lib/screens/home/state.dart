@@ -1,24 +1,47 @@
+import 'dart:async';
+
+import 'package:cuckoo/services/alarms.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 var homeStateProvider = StateNotifierProvider<HomeStateNotifier, HomeState>((ref) {
-  return HomeStateNotifier(HomeState(isAlarmButton: true));
+  return HomeStateNotifier(HomeState(alarm: false));
 });
 
-
 class HomeState {
-  bool isAlarmButton;
+  bool alarm;
 
-  HomeState({required this.isAlarmButton});
+  HomeState({required this.alarm});
 }
 
 class HomeStateNotifier extends StateNotifier<HomeState> {
+  final AlarmService alarms = AlarmService();
+  final AudioPlayer player = AudioPlayer();
+
   HomeStateNotifier(HomeState state) : super(state);
-  
-  showAlarmButton() {
-    state = HomeState(isAlarmButton: true);
+
+  schedule() {
+    // start loop
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      alarms.fetch().then((aa) {
+        for (var alarm in aa) {
+          if (alarm.active()) {
+            // @todo: file with whitespaces
+            start(alarm.audio);
+          }
+        }
+      });
+    });
   }
 
-  hideAlarmButton() {
-    state = HomeState(isAlarmButton: false);
+  start(String audio) {
+    player.play(audio, isLocal: true).then((result) {
+      state = HomeState(alarm: true);
+    });
+  }
+
+  stop() {
+    state = HomeState(alarm: false);
+    player.stop();
   }
 }

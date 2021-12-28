@@ -2,40 +2,52 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:cuckoo/components/tabs/navigator.dart';
 import 'package:cuckoo/components/tabs/tabs.dart';
 import 'package:cuckoo/constants.dart';
-import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/state.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/list/list.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
   late TabController controller;
 
   @override
   void initState() {
     super.initState();
     controller = TabController(initialIndex: 0, length: 4, vsync: this);
+
+    ref.read(homeStateProvider.notifier).schedule();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Row(
+      body: Stack(
         children: [
-          Sidebar(
-            controller: controller,
+          Row(
+            children: [
+              Sidebar(
+                controller: controller,
+              ),
+              Frame(
+                controller: controller,
+              ),
+            ],
           ),
-          Frame(
-            controller: controller,
-          ),
+          Dialog(
+            child: Container(
+              color: LightGrayColor,
+              height: 200,
+              width: 300,
+              child: Center(child: Text('Hello')),
+            ),
+          )
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -159,13 +171,6 @@ class Sidebar extends ConsumerWidget {
           ),
           Expanded(
             child: TabsSidebar(
-              onTabSelected: (index) {
-                if (index == 0) {
-                  ref.read(homeStateProvider.notifier).showAlarmButton();
-                } else {
-                  ref.read(homeStateProvider.notifier).hideAlarmButton();
-                }
-              },
               controller: controller,
               items: [
                 TabsSidebarItem(icon: CupertinoIcons.alarm_fill,  title: 'Alarm'),

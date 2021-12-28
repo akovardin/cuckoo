@@ -48,4 +48,16 @@ class AlarmModel {
 
     return time.split(':')[1];
   }
+
+  bool active() {
+    if (!status) {
+      return false;
+    }
+
+    // check time
+    // check day
+
+    // return true;
+    return false;
+  }
 }

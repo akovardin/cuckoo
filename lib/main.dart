@@ -4,6 +4,8 @@ import 'package:cuckoo/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +14,8 @@ Future<void> main() async {
     effect: WindowEffect.acrylic,
     color: Color(0xDD222222),
   );
+
+  // AudioPlayer.logEnabled = true;
 
   runApp(
     ProviderScope(
@@ -50,7 +54,6 @@ class App extends StatelessWidget {
           headline5: TextStyle(color: TextColor),
           headline3: TextStyle(color: TextColor, fontSize: 38, fontWeight: FontWeight.bold),
         ),
-
       ),
       home: HomeScreen(),
     );
