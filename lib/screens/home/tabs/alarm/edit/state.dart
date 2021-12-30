@@ -5,26 +5,26 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 
 part 'state.g.dart';
 
-var alarmStateProvider = StateNotifierProvider<AlarmStateNotifier, AlarmState>((ref) {
-  return AlarmStateNotifier(
-    AlarmState(alarm: null),
+var editStateProvider = StateNotifierProvider<EditStateNotifier, EditState>((ref) {
+  return EditStateNotifier(
+    EditState(alarm: null),
     service: AlarmService(),
   );
 });
 
 @CopyWith()
-class AlarmState {
+class EditState {
   AlarmModel? alarm;
 
-  AlarmState({
+  EditState({
     required this.alarm,
   });
 }
 
-class AlarmStateNotifier extends StateNotifier<AlarmState> {
+class EditStateNotifier extends StateNotifier<EditState> {
   final AlarmService service;
 
-  AlarmStateNotifier(AlarmState state, {required this.service}) : super(state);
+  EditStateNotifier(EditState state, {required this.service}) : super(state);
 
   current(AlarmModel alarm) {
     state = state.copyWith(alarm: alarm);
@@ -45,4 +45,34 @@ class AlarmStateNotifier extends StateNotifier<AlarmState> {
   Future<void> create(AlarmModel alarm) async {
     await service.create(alarm);
   }
+
+  // days switcher
+  void monday() {
+    state = state.copyWith(alarm: state.alarm?..monday = !(state.alarm?.monday ?? false));
+  }
+
+  void tuesday() {
+    state = state.copyWith(alarm: state.alarm?..tuesday = !(state.alarm?.tuesday ?? false));
+  }
+
+  void wednesday() {
+    state = state.copyWith(alarm: state.alarm?..wednesday = !(state.alarm?.wednesday ?? false));
+  }
+
+  void thursday() {
+    state = state.copyWith(alarm: state.alarm?..thursday = !(state.alarm?.thursday ?? false));
+  }
+
+  void friday() {
+    state = state.copyWith(alarm: state.alarm?..friday = !(state.alarm?.friday ?? false));
+  }
+
+  void saturday() {
+    state = state.copyWith(alarm: state.alarm?..saturday = !(state.alarm?.saturday ?? false));
+  }
+
+  void sunday() {
+    state = state.copyWith(alarm: state.alarm?..sunday = !(state.alarm?.sunday ?? false));
+  }
+
 }

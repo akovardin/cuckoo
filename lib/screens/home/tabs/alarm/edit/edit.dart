@@ -4,7 +4,7 @@ import 'package:cuckoo/components/buttons/primary.dart';
 import 'package:cuckoo/components/title/title.dart';
 import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/audio.dart';
-import 'package:cuckoo/screens/home/tabs/alarm/edit/components/day.dart';
+import 'package:cuckoo/screens/home/tabs/alarm/edit/components/days.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/time.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/state.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
@@ -56,7 +56,7 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                   PrimaryButton(
                     title: 'SAVE',
                     tap: () {
-                      ref.read(alarmStateProvider.notifier).create(ref.read(alarmStateProvider).alarm!).then((value) {
+                      ref.read(editStateProvider.notifier).create(ref.read(editStateProvider).alarm!).then((value) {
                         ref.read(listStateProvider.notifier).fetch();
                       });
                     },
@@ -77,7 +77,7 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                     ],
                   ),
                   SizedBox(width: 200),
-                  DayWidget(),
+                  DaysWidget(),
                 ],
               ),
             ],

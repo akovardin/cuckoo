@@ -6,11 +6,11 @@ part of 'state.dart';
 // CopyWithGenerator
 // **************************************************************************
 
-extension AlarmStateCopyWith on AlarmState {
-  AlarmState copyWith({
+extension EditStateCopyWith on EditState {
+  EditState copyWith({
     AlarmModel? alarm,
   }) {
-    return AlarmState(
+    return EditState(
       alarm: alarm ?? this.alarm,
     );
   }

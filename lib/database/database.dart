@@ -11,7 +11,8 @@ class Database {
   }
 
   static Future<sql.Database> _init() async {
-    // sql.deleteDatabase(join(await sql.getDatabasesPath(), 'cuckoo.db'));
+    // await sql.deleteDatabase(join(await sql.getDatabasesPath(), 'cuckoo.db'));
+    print(join(await sql.getDatabasesPath(), 'cuckoo.db'));
     return sql.openDatabase(
       join(await sql.getDatabasesPath(), 'cuckoo.db'),
       version: 1,
@@ -22,7 +23,14 @@ class Database {
             time string,
             audio text,
             title text,
-            status boolean
+            status boolean,
+            monday boolean,
+            tuesday boolean,
+            wednesday boolean,
+            thursday boolean,
+            friday boolean,
+            saturday boolean,
+            sunday boolean
           );
           """);
       },

@@ -38,12 +38,12 @@ class AudioWidget extends ConsumerWidget {
 
                 File file = File(result.files.single.path!);
 
-                ref.read(alarmStateProvider.notifier).audio(file.path);
+                ref.read(editStateProvider.notifier).audio(file.path);
               }),
           SizedBox(height: 24),
           Text(
-            ref.watch(alarmStateProvider).alarm!.audio != ''
-                ? ref.watch(alarmStateProvider).alarm!.name()
+            ref.watch(editStateProvider).alarm!.audio != ''
+                ? ref.watch(editStateProvider).alarm!.name()
                 : 'Audio file',
             overflow: TextOverflow.ellipsis,
           ),

@@ -40,14 +40,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               ),
             ],
           ),
-          Dialog(
-            child: Container(
-              color: LightGrayColor,
-              height: 200,
-              width: 300,
-              child: Center(child: Text('Hello')),
-            ),
-          )
+          if (ref.watch(homeStateProvider).alarm)
+            Dialog(
+              child: Container(
+                color: LightGrayColor,
+                height: 200,
+                width: 300,
+                child: Center(child: Text('Hello')),
+              ),
+            )
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -89,7 +90,6 @@ class Frame extends ConsumerWidget {
                       child: const AlarmListScreen(),
                     ),
                   ),
-
                   WillPopScope(
                     onWillPop: () async {
                       // !await currentFlow.navigatorKey.currentState.maybePop();
@@ -105,7 +105,6 @@ class Frame extends ConsumerWidget {
                       ),
                     ),
                   ),
-
                   WillPopScope(
                     onWillPop: () async {
                       // !await currentFlow.navigatorKey.currentState.maybePop();
@@ -121,7 +120,6 @@ class Frame extends ConsumerWidget {
                       ),
                     ),
                   ),
-
                   WillPopScope(
                     onWillPop: () async {
                       // !await currentFlow.navigatorKey.currentState.maybePop();
@@ -173,8 +171,8 @@ class Sidebar extends ConsumerWidget {
             child: TabsSidebar(
               controller: controller,
               items: [
-                TabsSidebarItem(icon: CupertinoIcons.alarm_fill,  title: 'Alarm'),
-                TabsSidebarItem(icon: CupertinoIcons.globe,  title: 'World Clock'),
+                TabsSidebarItem(icon: CupertinoIcons.alarm_fill, title: 'Alarm'),
+                TabsSidebarItem(icon: CupertinoIcons.globe, title: 'World Clock'),
                 TabsSidebarItem(icon: CupertinoIcons.stopwatch_fill, title: 'Stopwatch'),
                 TabsSidebarItem(icon: CupertinoIcons.timer, title: 'Timer'),
               ],

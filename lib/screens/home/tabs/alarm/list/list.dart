@@ -36,7 +36,9 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               GestureDetector(
                 child: const Icon(Icons.add, color: Colors.grey),
                 onTap: () {
-                  ref.read(alarmStateProvider.notifier).current(AlarmModel(0, '', '', '', false));
+                  ref
+                      .read(editStateProvider.notifier)
+                      .current(AlarmModel(0, '', '', '', false, false, false, false, false, false, false, false));
                   Navigator.push(
                     context,
                     PageRouteBuilder(

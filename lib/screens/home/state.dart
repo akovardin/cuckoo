@@ -23,6 +23,7 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
   schedule() {
     // start loop
     Timer.periodic(Duration(seconds: 10), (timer) {
+      return;
       alarms.fetch().then((aa) {
         for (var alarm in aa) {
           if (alarm.active()) {

@@ -21,9 +21,9 @@ class _TimeWidgetState extends ConsumerState<TimeWidget> {
   void initState() {
     super.initState();
 
-    if (ref.read(alarmStateProvider).alarm!.time != '') {
-      hours.text = ref.read(alarmStateProvider).alarm!.hours();
-      minutes.text = ref.read(alarmStateProvider).alarm!.minutes();
+    if (ref.read(editStateProvider).alarm!.time != '') {
+      hours.text = ref.read(editStateProvider).alarm!.hours();
+      minutes.text = ref.read(editStateProvider).alarm!.minutes();
     }
 
     hours.addListener(() {
@@ -37,7 +37,7 @@ class _TimeWidgetState extends ConsumerState<TimeWidget> {
   }
 
   void update() {
-    ref.read(alarmStateProvider.notifier).time("${hours.value.text}:${minutes.value.text}");
+    ref.read(editStateProvider.notifier).time("${hours.value.text}:${minutes.value.text}");
   }
 
   @override

@@ -48,7 +48,7 @@ class AlarmWidget extends ConsumerWidget {
             GestureDetector(
               child: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
-                ref.read(alarmStateProvider.notifier).current(alarm);
+                ref.read(editStateProvider.notifier).current(alarm);
 
                 Navigator.push(
                   context,
@@ -65,7 +65,7 @@ class AlarmWidget extends ConsumerWidget {
               activeColor: PrimaryColor,
               value: alarm.status,
               onChanged: (v) {
-                ref.read(alarmStateProvider.notifier).update(alarm..status = !alarm.status).then((value) {
+                ref.read(editStateProvider.notifier).update(alarm..status = !alarm.status).then((value) {
                   ref.read(listStateProvider.notifier).fetch();
                 });
               },
