@@ -29,8 +29,7 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
 
   schedule() {
     // start loop
-    // @todo: change to 1 minutes
-    Timer.periodic(Duration(seconds: 10), (timer) {
+    Timer.periodic(Duration(minutes: 1), (timer) {
       alarms.fetch().then((aa) {
         for (var alarm in aa) {
           if (alarm.active() && !state.onair) {
@@ -48,7 +47,6 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
   }
 
   stop() {
-    // @todo: update alarm status?
     player.stop().then((value) {
       state = HomeState(alarm: null, onair: false);
     });

@@ -52,7 +52,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
               const SizedBox(width: 24),
             ],
           ),
-        ), // todo: add title child param
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
