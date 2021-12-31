@@ -21,38 +21,38 @@ class DaysWidget extends ConsumerWidget {
           ),
           Day(
             title: 'Monday',
-            checked: ref.watch(editStateProvider).alarm?.monday ?? false,
-            tap:  () => ref.read(editStateProvider.notifier).monday(),
+            checked: ref.watch(alarmEditStateProvider).alarm?.monday ?? false,
+            tap:  () => ref.read(alarmEditStateProvider.notifier).monday(),
           ),
           Day(
             title: 'Tuesday',
-            checked: ref.watch(editStateProvider).alarm?.tuesday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).tuesday(),
+            checked: ref.watch(alarmEditStateProvider).alarm?.tuesday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).tuesday(),
           ),
           Day(
             title: 'Wednesday',
-            checked: ref.watch(editStateProvider).alarm?.wednesday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).wednesday(),
+            checked: ref.watch(alarmEditStateProvider).alarm?.wednesday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).wednesday(),
           ),
           Day(
             title: 'Thursday',
-            checked: ref.watch(editStateProvider).alarm?.thursday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).thursday(),
+            checked: ref.watch(alarmEditStateProvider).alarm?.thursday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).thursday(),
           ),
           Day(
             title: 'Friday',
-            checked: ref.watch(editStateProvider).alarm?.friday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).friday(),
+            checked: ref.watch(alarmEditStateProvider).alarm?.friday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).friday(),
           ),
           Day(
             title: 'Saturday',
-            checked: ref.watch(editStateProvider).alarm?.saturday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).saturday()
+            checked: ref.watch(alarmEditStateProvider).alarm?.saturday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).saturday()
           ),
           Day(
             title: 'Sunday',
-            checked: ref.watch(editStateProvider).alarm?.sunday ?? false,
-            tap: () => ref.read(editStateProvider.notifier).sunday()
+            checked: ref.watch(alarmEditStateProvider).alarm?.sunday ?? false,
+            tap: () => ref.read(alarmEditStateProvider.notifier).sunday()
           ),
         ],
       ),
@@ -83,7 +83,7 @@ class Day extends StatelessWidget {
             child: Text(title),
           ),
           Spacer(),
-          if (checked) Icon(Icons.done, color: TextColor),
+          if (checked) Icon(Icons.done, color: PrimaryTextColor),
         ],
       ),
     );

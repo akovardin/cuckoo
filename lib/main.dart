@@ -44,15 +44,18 @@ class App extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,
           selectionHandleColor: Colors.white,
         ),
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: TextColor),
-          bodyText2: TextStyle(color: TextColor),
-          headline5: TextStyle(color: TextColor),
-          headline3: TextStyle(color: TextColor, fontSize: 38, fontWeight: FontWeight.bold),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(color: PrimaryTextColor),
+          bodyText2: TextStyle(color: PrimaryTextColor),
+          headline5: TextStyle(color: PrimaryTextColor),
+          headline1: TextStyle(color: PrimaryTextColor, fontSize: 44, fontWeight: FontWeight.bold),
+          headline2: TextStyle(color: PrimaryTextColor, fontSize: 38, fontWeight: FontWeight.bold),
+          headline3: TextStyle(color: PrimaryTextColor, fontSize: 32, fontWeight: FontWeight.bold),
+          headline4: TextStyle(color: PrimaryTextColor, fontSize: 28, fontWeight: FontWeight.bold),
         ),
       ),
       home: HomeScreen(),

@@ -49,14 +49,14 @@ class AudioWidget extends ConsumerWidget {
 
                 print(dst);
 
-                ref.read(editStateProvider.notifier).audio(dst);
+                ref.read(alarmEditStateProvider.notifier).audio(dst);
               }),
           SizedBox(height: 24),
           Container(
             width: 150,
             child: Text(
-              ref.watch(editStateProvider).alarm!.audio != ''
-                  ? ref.watch(editStateProvider).alarm!.name()
+              ref.watch(alarmEditStateProvider).alarm!.audio != ''
+                  ? ref.watch(alarmEditStateProvider).alarm!.name()
                   : 'Audio file',
               overflow: TextOverflow.ellipsis,
             ),

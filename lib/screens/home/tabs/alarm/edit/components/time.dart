@@ -21,9 +21,9 @@ class _TimeWidgetState extends ConsumerState<TimeWidget> {
   void initState() {
     super.initState();
 
-    if (ref.read(editStateProvider).alarm!.time != '') {
-      hours.text = ref.read(editStateProvider).alarm!.hours();
-      minutes.text = ref.read(editStateProvider).alarm!.minutes();
+    if (ref.read(alarmEditStateProvider).alarm!.time != '') {
+      hours.text = ref.read(alarmEditStateProvider).alarm!.hours();
+      minutes.text = ref.read(alarmEditStateProvider).alarm!.minutes();
     }
 
     hours.addListener(() {
@@ -37,7 +37,7 @@ class _TimeWidgetState extends ConsumerState<TimeWidget> {
   }
 
   void update() {
-    ref.read(editStateProvider.notifier).time("${hours.value.text}:${minutes.value.text}");
+    ref.read(alarmEditStateProvider.notifier).time("${hours.value.text}:${minutes.value.text}");
   }
 
   @override
@@ -60,7 +60,7 @@ class _TimeWidgetState extends ConsumerState<TimeWidget> {
                 padding: EdgeInsets.only(left: 10, right: 10, bottom: 12),
                 child: Text(
                   ':',
-                  style: TextStyle(color: TextColor, fontSize: 32),
+                  style: TextStyle(color: PrimaryTextColor, fontSize: 32),
                 ),
               ),
               TimeField(controller: minutes),
@@ -88,7 +88,7 @@ class TimeField extends StatelessWidget {
       child: TextField(
         controller: controller,
         maxLength: 2,
-        style: const TextStyle(color: TextColor, fontSize: 32),
+        style: const TextStyle(color: PrimaryTextColor, fontSize: 32),
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
@@ -96,13 +96,13 @@ class TimeField extends StatelessWidget {
           contentPadding: const EdgeInsets.only(bottom: 5),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: TextColor,
+              color: PrimaryTextColor,
             ),
             borderRadius: BorderRadius.circular(6),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: TextColor,
+              color: PrimaryTextColor,
             ),
             borderRadius: BorderRadius.circular(6),
           ),

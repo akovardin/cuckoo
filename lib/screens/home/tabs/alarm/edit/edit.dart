@@ -50,13 +50,13 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
             children: [
               Row(
                 children: [
-                  Text('Create', style: theme.textTheme.headline3),
+                  Text(ref.read(alarmEditStateProvider).alarm!.id == 0 ? 'Create' : 'Update', style: theme.textTheme.headline2),
                   const Spacer(),
                   PrimaryButton(
                     title: 'SAVE',
                     tap: () {
-                      ref.read(editStateProvider.notifier).save(ref.read(editStateProvider).alarm!).then((value) {
-                        ref.read(listStateProvider.notifier).fetch();
+                      ref.read(alarmEditStateProvider.notifier).save(ref.read(alarmEditStateProvider).alarm!).then((value) {
+                        ref.read(alarmListStateProvider.notifier).fetch();
                         Navigator.pop(context);
                       });
                     },

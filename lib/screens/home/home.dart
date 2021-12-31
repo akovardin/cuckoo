@@ -6,6 +6,9 @@ import 'package:cuckoo/components/tabs/tabs.dart';
 import 'package:cuckoo/constants.dart';
 import 'package:cuckoo/screens/home/state.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/list/list.dart';
+import 'package:cuckoo/screens/home/tabs/clock/list/list.dart';
+import 'package:cuckoo/screens/home/tabs/stopwatch/stopwatch.dart';
+import 'package:cuckoo/screens/home/tabs/timer/timer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -89,11 +92,7 @@ class Frame extends ConsumerWidget {
                     },
                     child: TabNavigator(
                       navigatorKey: navigatorKey2,
-                      child: Container(
-                        child: Center(
-                          child: Text("2", style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
+                      child: const ClockListScreen(),
                     ),
                   ),
                   WillPopScope(
@@ -102,11 +101,7 @@ class Frame extends ConsumerWidget {
                     },
                     child: TabNavigator(
                       navigatorKey: navigatorKey3,
-                      child: Container(
-                        child: Center(
-                          child: Text("3", style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
+                      child: Stopwatch(),
                     ),
                   ),
                   WillPopScope(
@@ -115,11 +110,7 @@ class Frame extends ConsumerWidget {
                     },
                     child: TabNavigator(
                       navigatorKey: navigatorKey4,
-                      child: Container(
-                        child: Center(
-                          child: Text("4", style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
+                      child: Timer(),
                     ),
                   ),
                 ],

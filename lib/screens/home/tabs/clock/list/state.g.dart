@@ -6,12 +6,14 @@ part of 'state.dart';
 // CopyWithGenerator
 // **************************************************************************
 
-extension AlarmEditStateCopyWith on AlarmEditState {
-  AlarmEditState copyWith({
-    AlarmModel? alarm,
+extension ClockListStateCopyWith on ClockListState {
+  ClockListState copyWith({
+    bool? edit,
+    List<ClockModel>? list,
   }) {
-    return AlarmEditState(
-      alarm: alarm ?? this.alarm,
+    return ClockListState(
+      edit: edit ?? this.edit,
+      list: list ?? this.list,
     );
   }
 }

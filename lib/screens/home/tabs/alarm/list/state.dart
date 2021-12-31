@@ -5,28 +5,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'state.g.dart';
 
-var listStateProvider = StateNotifierProvider<ListStateNotifier, ListState>((ref) {
-  return ListStateNotifier(
-    ListState(list: [], edit: false),
+var alarmListStateProvider = StateNotifierProvider<AlarmListStateNotifier, AlarmListState>((ref) {
+  return AlarmListStateNotifier(
+    AlarmListState(list: [], edit: false),
     service: AlarmService(),
   );
 });
 
 @CopyWith()
-class ListState {
+class AlarmListState {
   List<AlarmModel> list = [];
   bool edit = false;
 
-  ListState({
+  AlarmListState({
     required this.list,
     required this.edit,
   });
 }
 
-class ListStateNotifier extends StateNotifier<ListState> {
+class AlarmListStateNotifier extends StateNotifier<AlarmListState> {
   final AlarmService service;
 
-  ListStateNotifier(ListState state, {required this.service}) : super(state);
+  AlarmListStateNotifier(AlarmListState state, {required this.service}) : super(state);
 
   mode() {
     state = state.copyWith(edit: !state.edit);

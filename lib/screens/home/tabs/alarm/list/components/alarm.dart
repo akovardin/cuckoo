@@ -17,19 +17,19 @@ class AlarmWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const style = TextStyle(color: TextColor, fontSize: 14);
+    const style = TextStyle(color: PrimaryTextColor, fontSize: 14);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24),
       decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: GrayColor, width: 1))),
       child: Row(
         children: [
-          if (ref.watch(listStateProvider).edit)
+          if (ref.watch(alarmListStateProvider).edit)
             Row(
               children: [
                 GestureDetector(
                   child: Icon(CupertinoIcons.minus_circled, color: Colors.red),
                   onTap: () {
-                    ref.read(listStateProvider.notifier).remove(alarm.id);
+                    ref.read(alarmListStateProvider.notifier).remove(alarm.id);
                   },
                 ),
                 SizedBox(width: 12),
@@ -44,11 +44,11 @@ class AlarmWidget extends ConsumerWidget {
             ],
           ),
           const Spacer(),
-          if (ref.watch(listStateProvider).edit)
+          if (ref.watch(alarmListStateProvider).edit)
             GestureDetector(
               child: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
-                ref.read(editStateProvider.notifier).current(alarm);
+                ref.read(alarmEditStateProvider.notifier).current(alarm);
 
                 Navigator.push(
                   context,
@@ -65,8 +65,8 @@ class AlarmWidget extends ConsumerWidget {
               activeColor: PrimaryColor,
               value: alarm.status,
               onChanged: (v) {
-                ref.read(editStateProvider.notifier).update(alarm..status = !alarm.status).then((value) {
-                  ref.read(listStateProvider.notifier).fetch();
+                ref.read(alarmEditStateProvider.notifier).update(alarm..status = !alarm.status).then((value) {
+                  ref.read(alarmListStateProvider.notifier).fetch();
                 });
               },
             ),

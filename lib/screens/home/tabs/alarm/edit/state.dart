@@ -5,26 +5,26 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 
 part 'state.g.dart';
 
-var editStateProvider = StateNotifierProvider<EditStateNotifier, EditState>((ref) {
-  return EditStateNotifier(
-    EditState(alarm: null),
+var alarmEditStateProvider = StateNotifierProvider<AlarmEditStateNotifier, AlarmEditState>((ref) {
+  return AlarmEditStateNotifier(
+    AlarmEditState(alarm: null),
     service: AlarmService(),
   );
 });
 
 @CopyWith()
-class EditState {
+class AlarmEditState {
   AlarmModel? alarm;
 
-  EditState({
+  AlarmEditState({
     required this.alarm,
   });
 }
 
-class EditStateNotifier extends StateNotifier<EditState> {
+class AlarmEditStateNotifier extends StateNotifier<AlarmEditState> {
   final AlarmService service;
 
-  EditStateNotifier(EditState state, {required this.service}) : super(state);
+  AlarmEditStateNotifier(AlarmEditState state, {required this.service}) : super(state);
 
   current(AlarmModel alarm) {
     state = state.copyWith(alarm: alarm);

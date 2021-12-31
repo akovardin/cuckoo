@@ -20,12 +20,12 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(listStateProvider.notifier).fetch();
+    ref.read(alarmListStateProvider.notifier).fetch();
   }
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(color: TextColor, fontSize: 14);
+    final theme = Theme.of(context);
 
     return Column(
       children: [
@@ -37,7 +37,7 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
                 child: const Icon(Icons.add, color: Colors.grey),
                 onTap: () {
                   ref
-                      .read(editStateProvider.notifier)
+                      .read(alarmEditStateProvider.notifier)
                       .current(AlarmModel(0, '', '', '', false, false, false, false, false, false, false, false));
                   Navigator.push(
                     context,
@@ -62,26 +62,26 @@ class _AlarmListScreenState extends ConsumerState<AlarmListScreen> {
                 children: [
                   Row(
                     children: [
-                      Text('Alarm', style: style.copyWith(fontSize: 38, fontWeight: FontWeight.bold)),
+                      Text('Alarm', style: theme.textTheme.headline2?.copyWith(fontWeight: FontWeight.bold)),
                       const Spacer(),
-                      if (ref.watch(listStateProvider).list.length > 0)
+                      if (ref.watch(alarmListStateProvider).list.length > 0)
                         PrimaryButton(
-                          title: ref.watch(listStateProvider).edit ? 'CANCEL' : 'EDIT',
+                          title: ref.watch(alarmListStateProvider).edit ? 'CANCEL' : 'EDIT',
                           tap: () {
-                            ref.read(listStateProvider.notifier).mode();
+                            ref.read(alarmListStateProvider.notifier).mode();
                           },
                         )
                     ],
                   ),
                   const SizedBox(height: 32),
-                  if (ref.watch(listStateProvider).list.length > 0)
+                  if (ref.watch(alarmListStateProvider).list.length > 0)
                     Column(
                       children: [
-                        for (var alarm in ref.watch(listStateProvider).list) AlarmWidget(alarm: alarm),
+                        for (var alarm in ref.watch(alarmListStateProvider).list) AlarmWidget(alarm: alarm),
                       ],
                     )
                   else
-                    Text('No one alarm', style: TextStyle(color: TextColor, fontSize: 14)),
+                    Text('No one alarm', style: TextStyle(color: PrimaryTextColor, fontSize: 14)),
                 ],
               ),
             ),

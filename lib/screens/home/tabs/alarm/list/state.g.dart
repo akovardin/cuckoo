@@ -6,12 +6,12 @@ part of 'state.dart';
 // CopyWithGenerator
 // **************************************************************************
 
-extension ListStateCopyWith on ListState {
-  ListState copyWith({
+extension AlarmListStateCopyWith on AlarmListState {
+  AlarmListState copyWith({
     bool? edit,
     List<AlarmModel>? list,
   }) {
-    return ListState(
+    return AlarmListState(
       edit: edit ?? this.edit,
       list: list ?? this.list,
     );
