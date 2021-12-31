@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cuckoo/components/buttons/primary.dart';
 import 'package:cuckoo/components/title/title.dart';
-import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/audio.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/days.dart';
 import 'package:cuckoo/screens/home/tabs/alarm/edit/components/time.dart';
@@ -56,14 +55,15 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                   PrimaryButton(
                     title: 'SAVE',
                     tap: () {
-                      ref.read(editStateProvider.notifier).create(ref.read(editStateProvider).alarm!).then((value) {
+                      ref.read(editStateProvider.notifier).save(ref.read(editStateProvider).alarm!).then((value) {
                         ref.read(listStateProvider.notifier).fetch();
+                        Navigator.pop(context);
                       });
                     },
                   )
                 ],
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 48),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class _AlarmEditScreenState extends ConsumerState<AlarmEditScreen> {
                       AudioWidget(),
                     ],
                   ),
-                  SizedBox(width: 200),
+                  SizedBox(width: 150),
                   DaysWidget(),
                 ],
               ),

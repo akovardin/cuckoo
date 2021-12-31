@@ -38,6 +38,14 @@ class EditStateNotifier extends StateNotifier<EditState> {
     state = state.copyWith(alarm: state.alarm?..time = time);
   }
 
+  Future<void> save(AlarmModel alarm) async {
+    if (alarm.id == 0) {
+      await service.create(alarm);
+    } else {
+      await service.update(alarm);
+    }
+  }
+
   Future<void> update(AlarmModel alarm) async {
     await service.update(alarm);
   }

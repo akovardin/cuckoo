@@ -1,4 +1,5 @@
 import 'package:path/path.dart';
+import 'package:intl/intl.dart';
 
 class AlarmModel {
   int id;
@@ -88,10 +89,55 @@ class AlarmModel {
       return false;
     }
 
-    // check time
-    // check day
+    var date = DateTime.now();
 
-    // return true;
+    if (!_checkDay(date)) {
+      return false;
+    }
+
+    if (!_checkTime(date)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _checkDay(DateTime date) {
+    var day = DateFormat('EEEE').format(date).toLowerCase();
+
+    List<String> days = [];
+
+    if (monday) {
+      days.add('monday');
+    }
+    if (tuesday) {
+      days.add('tuesday');
+    }
+    if (wednesday) {
+      days.add('wednesday');
+    }
+    if (thursday) {
+      days.add('thursday');
+    }
+    if (friday) {
+      days.add('friday');
+    }
+    if (saturday) {
+      days.add('saturday');
+    }
+    if (sunday) {
+      days.add('sunday');
+    }
+
+    if (days.contains(day)) {
+      return true;
+    }
+
     return false;
+  }
+
+  bool _checkTime(DateTime date) {
+    var current = DateFormat('HH:mm').format(date);
+    return current == time;
   }
 }

@@ -1,17 +1,24 @@
 import 'dart:async';
+import 'dart:ffi';
+import 'dart:io';
 
+import 'package:cuckoo/models/alarm.dart';
 import 'package:cuckoo/services/alarms.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 var homeStateProvider = StateNotifierProvider<HomeStateNotifier, HomeState>((ref) {
-  return HomeStateNotifier(HomeState(alarm: false));
+  return HomeStateNotifier(HomeState(onair: true, alarm: AlarmModel(1, '12:11', 'exqmple.mp3', '', true, true, true, true, true, true, true, true)));
 });
 
 class HomeState {
-  bool alarm;
+  AlarmModel? alarm;
+  bool onair;
 
-  HomeState({required this.alarm});
+  HomeState({
+    this.alarm,
+    required this.onair,
+  });
 }
 
 class HomeStateNotifier extends StateNotifier<HomeState> {
@@ -22,27 +29,28 @@ class HomeStateNotifier extends StateNotifier<HomeState> {
 
   schedule() {
     // start loop
+    // @todo: change to 1 minutes
     Timer.periodic(Duration(seconds: 10), (timer) {
-      return;
       alarms.fetch().then((aa) {
         for (var alarm in aa) {
-          if (alarm.active()) {
-            // @todo: file with whitespaces
-            start(alarm.audio);
+          if (alarm.active() && !state.onair) {
+            start(alarm);
           }
         }
       });
     });
   }
 
-  start(String audio) {
-    player.play(audio, isLocal: true).then((result) {
-      state = HomeState(alarm: true);
+  start(AlarmModel alarm) {
+    player.play(alarm.audio, isLocal: true).then((result) {
+      state = HomeState(alarm: alarm, onair: true);
     });
   }
 
   stop() {
-    state = HomeState(alarm: false);
-    player.stop();
+    // @todo: update alarm status?
+    player.stop().then((value) {
+      state = HomeState(alarm: null, onair: false);
+    });
   }
 }

@@ -1,4 +1,6 @@
+import 'package:audio_wave/audio_wave.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:cuckoo/components/buttons/alert.dart';
 import 'package:cuckoo/components/tabs/navigator.dart';
 import 'package:cuckoo/components/tabs/tabs.dart';
 import 'package:cuckoo/constants.dart';
@@ -40,15 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               ),
             ],
           ),
-          if (ref.watch(homeStateProvider).alarm)
-            Dialog(
-              child: Container(
-                color: LightGrayColor,
-                height: 200,
-                width: 300,
-                child: Center(child: Text('Hello')),
-              ),
-            )
+          if (ref.watch(homeStateProvider).onair) AlarmDialog()
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -179,6 +173,71 @@ class Sidebar extends ConsumerWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class AlarmDialog extends ConsumerWidget {
+  const AlarmDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Dialog(
+      child: Container(
+        color: LightGrayColor,
+        height: 400,
+        width: 500,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              ref.watch(homeStateProvider).alarm?.time ?? '00:00',
+              style: TextStyle(fontSize: 52, fontWeight: FontWeight.w300),
+            ),
+            Text(
+              ref.watch(homeStateProvider).alarm?.name() ?? 'Alarm',
+            ),
+            AudioWave(
+              height: 50,
+              width: 150,
+              spacing: 2.5,
+              beatRate: Duration(milliseconds: 60),
+              bars: [
+                AudioWaveBar(height: 10, color: Colors.white),
+                AudioWaveBar(height: 30, color: Colors.white),
+                AudioWaveBar(height: 70, color: Colors.white),
+                AudioWaveBar(height: 40, color: Colors.white),
+                AudioWaveBar(height: 20, color: Colors.white),
+                AudioWaveBar(height: 10, color: Colors.white),
+                AudioWaveBar(height: 30, color: Colors.white),
+                AudioWaveBar(height: 70, color: Colors.white),
+                AudioWaveBar(height: 40, color: Colors.white),
+                AudioWaveBar(height: 20, color: Colors.white),
+                AudioWaveBar(height: 10, color: Colors.white),
+                AudioWaveBar(height: 30, color: Colors.white),
+                AudioWaveBar(height: 70, color: Colors.white),
+                AudioWaveBar(height: 40, color: Colors.white),
+                AudioWaveBar(height: 20, color: Colors.white),
+                AudioWaveBar(height: 10, color: Colors.white),
+                AudioWaveBar(height: 30, color: Colors.white),
+                AudioWaveBar(height: 70, color: Colors.white),
+                AudioWaveBar(height: 40, color: Colors.white),
+                AudioWaveBar(height: 20, color: Colors.white),
+              ],
+            ),
+            SizedBox(height: 5),
+            AlertButton(
+              title: 'STOP',
+              tap: () {
+                ref.read(homeStateProvider.notifier).stop();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

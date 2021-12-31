@@ -6,6 +6,8 @@ import 'package:cuckoo/screens/home/tabs/alarm/list/state.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class AudioWidget extends ConsumerWidget {
   const AudioWidget({Key? key, this.selected}) : super(key: key);
@@ -36,16 +38,28 @@ class AudioWidget extends ConsumerWidget {
                   return;
                 }
 
-                File file = File(result.files.single.path!);
+                // copy to local folder
 
-                ref.read(editStateProvider.notifier).audio(file.path);
+                Directory dir = await getApplicationDocumentsDirectory();
+                String path = dir.path;
+
+                File src = File(result.files.single.path!);
+                var dst = join(path, basename(src.path));
+                src.copy(dst);
+
+                print(dst);
+
+                ref.read(editStateProvider.notifier).audio(dst);
               }),
           SizedBox(height: 24),
-          Text(
-            ref.watch(editStateProvider).alarm!.audio != ''
-                ? ref.watch(editStateProvider).alarm!.name()
-                : 'Audio file',
-            overflow: TextOverflow.ellipsis,
+          Container(
+            width: 150,
+            child: Text(
+              ref.watch(editStateProvider).alarm!.audio != ''
+                  ? ref.watch(editStateProvider).alarm!.name()
+                  : 'Audio file',
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),
